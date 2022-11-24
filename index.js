@@ -81,9 +81,10 @@ traversal(a, getjeyvalue, "");
 // console.log(map1);
 
 var data;
-var filea = fs.createReadStream("./data/sample_2/mapping.csv");
-const dirName = Path.dirname("./data/sample_2/mapping.csv").split("/")[2];
-const fileName = Path.parse("./data/sample_2/mapping.csv").name;
+const matchingCSVDir = "./data/sample_1/mapping.csv";
+var filea = fs.createReadStream(matchingCSVDir);
+const dirName = Path.dirname(matchingCSVDir).split("/")[2];
+const fileName = Path.parse(matchingCSVDir).name;
 const jsonFileName = dirName + "_" + fileName + ".json";
 console.log(jsonFileName);
 let finalMapCSVToJSON = {};
@@ -126,14 +127,18 @@ papa.parse(filea, {
 
     // console.log(typeof JSON.stringify(finalMapCSVToJSON));
 
-    fs.writeFile(jsonFileName, JSON.stringify(finalMapCSVToJSON), (err) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
+    fs.writeFile(
+      "jsonMapping/" + jsonFileName,
+      JSON.stringify(finalMapCSVToJSON),
+      (err) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
 
-      console.log("File Saved");
-    });
+        console.log("File Saved");
+      },
+    );
     // console.log(finalMapCSVToJSON);
   },
 });
