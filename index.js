@@ -78,10 +78,10 @@ function traversal(arr, getjeyvalue, count) {
 }
 
 traversal(a, getjeyvalue, "");
-// console.log(map1);
+console.log(map1);
 
 var data;
-const matchingCSVDir = "./data/sample_1/mapping.csv";
+const matchingCSVDir = "./data/sample_3`/mapping.csv";
 var filea = fs.createReadStream(matchingCSVDir);
 const dirName = Path.dirname(matchingCSVDir).split("/")[2];
 const fileName = Path.parse(matchingCSVDir).name;
@@ -89,9 +89,10 @@ const jsonFileName = dirName + "_" + fileName + ".json";
 console.log(jsonFileName);
 let finalMapCSVToJSON = {};
 papa.parse(filea, {
+  // error:
   complete: function (results) {
     data = results.data;
-    // console.log("Finished:", data);
+    console.log("Finished:", data);
 
     data.forEach((val, _) => {
       let n = val[2].length;
@@ -109,18 +110,19 @@ papa.parse(filea, {
         if (s[i] != "+") {
           temp += s[i];
         } else {
-          //   console.log(temp);
+          console.log(temp);
           if (temp != "Source") {
-            // console.log(map1.get(temp));
-            finalMapCSVToJSON[1] = "";
+            console.log(map1.get(temp));
+            finalMapCSVToJSON[val[1]] = "";
             finalMapCSVToJSON[val[1]] += map1.get(temp) + " ";
           }
           temp = "";
         }
       }
       if (temp != "Source") {
-        // console.log(map1.get(temp));
-        finalMapCSVToJSON[val[1]] = "";
+        console.log(temp);
+        console.log(map1.get(temp));
+        if (!finalMapCSVToJSON[val[1]]) finalMapCSVToJSON[val[1]] = "";
         finalMapCSVToJSON[val[1]] += map1.get(temp);
       }
     });
@@ -139,7 +141,7 @@ papa.parse(filea, {
         console.log("File Saved");
       },
     );
-    // console.log(finalMapCSVToJSON);
+    console.log(finalMapCSVToJSON);
   },
 });
 
